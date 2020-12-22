@@ -16,6 +16,7 @@ use App\Http\Controllers\{ProductController};
 */
 
 Route::get('/', [ProductController::class, 'index']);
+Route::get('/list-product', [ProductController::class, 'list_product'])->name('list-product');
 
 Auth::routes();
 

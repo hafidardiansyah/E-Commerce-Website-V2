@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -29,17 +30,20 @@
             </a>
         </div>
 
-        <div class="card-deck my-4">
+        <h3 class="mt-4">Best Products</h3>
+
+        <div class="row row-cols-1 row-cols-md-2">
             @forelse ($products as $product)
-                <div class="card">
-                    <a href="#">
-                        <img src="{{ asset($product->takeImage()) }}" class="card-img-top img"
-                            alt="{{ asset($product->takeImage()) }}">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text">{{ $product->description }}</p>
-                        <a href="#" class="btn btn-primary">Detail</a>
+                <div class="col-md-3 my-4">
+                    <div class="card">
+                        <a href="#">
+                            <img src="{{ asset($product->takeImage()) }}" class="card-img-top img" height="250">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <p class="card-text">Rp {{ number_format($product->price, 2, ',', '.') }}</p>
+                            <a href="#" class="btn btn-primary">Detail</a>
+                        </div>
                     </div>
                 </div>
             @empty
@@ -49,9 +53,7 @@
                     </div>
                 </div>
             @endforelse
-
         </div>
-
 
         {{-- <div class="row justify-content-center">
             <div class="col-md-8">
@@ -72,6 +74,7 @@
         </div> --}}
 
         {{ $products->links() }}
+
     </div>
 
 @endsection

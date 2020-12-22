@@ -12,7 +12,14 @@ class ProductController extends Controller
     public function index()
     {
         return view('products.home', [
-            'products' => Product::latest()->simplePaginate(5)
+            'products' => Product::latest()->simplePaginate(8)
+        ]);
+    }
+
+    public function list_product()
+    {
+        return view('products.list-product', [
+            'products' => Product::latest()->simplePaginate(16)
         ]);
     }
 
@@ -35,7 +42,7 @@ class ProductController extends Controller
         $slug = Str::slug($request->name);
         $attr['slug'] = $slug;
 
-        $image = request()->file('image')->store('public/images');
+        $image = request()->file('image')->store('images');
 
         $attr['image'] = $image;
 
