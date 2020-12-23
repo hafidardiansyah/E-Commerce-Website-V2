@@ -7,13 +7,14 @@
         <div class="row">
 
             <div class="col-md-6">
-                <img src="https://dummyimage.com/200x200/f2f2f2/000333" alt="Default Image"
+                <img src="{{ asset($product->takeImage()) }}" alt="{{ $product->slug }} Image"
                     class="img-thumbnail img-preview">
             </div>
             <div class="col-md-6">
-                <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
+                <form action="/{{ $product->slug }}/update" method="POST" enctype="multipart/form-data">
+                    @method('patch')
                     @csrf
-                    @include('products.partials.form-control', ['submit' => 'Create'])
+                    @include('products.partials.form-control')
                 </form>
             </div>
 

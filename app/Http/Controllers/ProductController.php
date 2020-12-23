@@ -29,6 +29,13 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
 
+    public function search()
+    {
+        $keyword = request('keyword');
+        $products = Product::where('name', 'like', "%$keyword%")->latest()->simplePaginate(32);
+        return view('products.list-product', compact('products'));
+    }
+
     public function create()
     {
         return view('products.create', [
@@ -47,7 +54,7 @@ class ProductController extends Controller
         $slug = Str::slug($request->name);
         $attr['slug'] = $slug;
 
-        $image = request()->file('image')->store('images');
+        $image = request()->file('image') ? request()->file('image')->store('images') : null;
 
         $attr['image'] = $image;
 
@@ -56,8 +63,34 @@ class ProductController extends Controller
 
         session()->flash('success', 'The post was created.');
 
-        // session()->flash('error', 'The post was created.');
-
         return redirect('/');
+    }
+
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
+    public function update(ProductRequest $request, Product $product)
+    {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,jpg,png|max:1024'
+        ]);
+
+        if (request()->file('image')) {
+            \Storage::delete($product->image);
+            $image = request()->file('image')->store('images');
+        } else {
+            $image = $product->image;
+        }
+
+        $attr = $request->all();
+        $attr['image'] = $image;
+
+        $product->update($attr);
+
+        session()->flash('success', 'The post was updated.');
+
+        return redirect('/detail/' . $product->slug);
     }
 }

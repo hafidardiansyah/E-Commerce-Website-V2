@@ -10,13 +10,16 @@
             @forelse ($products as $product)
                 <div class="col-md-3 my-4">
                     <div class="card">
-                        <a href="/detail/{{ $product->slug }}">
-                            <img src="{{ asset($product->takeImage()) }}" class="card-img-top img" height="250">
-                        </a>
+                        @if ($product->image)
+                            <a href="/detail/{{ $product->slug }}">
+                                <img src="{{ asset($product->takeImage()) }}" class="card-img-top img" height="250"
+                                    alt="{{ $product->slug }} Image">
+                            </a>
+                        @endif
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <p class="card-text">Rp {{ number_format($product->price, 2, ',', '.') }}</p>
-                            <a href="#" class="btn btn-primary">Detail</a>
+                            <a href="/detail/{{ $product->slug }}" class="btn btn-primary">Detail</a>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,8 @@
         <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%">
+                    <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%"
+                        alt="{{ $product->slug }} Image">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -20,6 +21,10 @@
                             </small>
                         </p>
                         <a href="#" class="btn btn-primary">Buy</a>
+                        @if (Auth::user()->role == 0)
+                            <a href="/{{ $product->slug }}/edit" class="btn btn-warning">Edit</a>
+                            <a href="#" class="btn btn-danger">Delete</a>
+                        @endif
                     </div>
                 </div>
             </div>
