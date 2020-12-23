@@ -17,6 +17,7 @@ use App\Http\Controllers\{ProductController};
 
 Route::get('/', [ProductController::class, 'index']);
 Route::get('/list-product', [ProductController::class, 'list_product'])->name('list-product');
+Route::get('/detail/{product:slug}', [ProductController::class, 'show']);
 
 Auth::routes();
 
@@ -24,8 +25,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('create', [ProductController::class, 'create'])->name('create');
     Route::post('store', [ProductController::class, 'store'])->name('store');
 
-    // Route::get('{post:slug}/edit', [PostController::class, 'edit']);
-    // Route::patch('{post:slug}/update', [PostController::class, 'update']);
+    Route::get('{post:slug}/edit', [PostController::class, 'edit']);
+    Route::patch('{post:slug}/update', [PostController::class, 'update']);
 
     // Route::delete('{post:slug}/delete', [PostController::class, 'delete']);
 });

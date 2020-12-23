@@ -1,24 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
 
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                @foreach ($carouselProducts as $product)
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $product->id }}"
+                        class="{{ $product->id == 2 ? 'active' : '' }} bg-primary"></li>
+                @endforeach
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://dummyimage.com/600x400/333333/f2f2f2" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://dummyimage.com/600x400/333333/f2f2f2" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://dummyimage.com/600x400/333333/f2f2f2" class="d-block w-100" alt="...">
-                </div>
+                @foreach ($carouselProducts as $product)
+                    <div class="carousel-item {{ $product->id == 2 ? 'active' : '' }}">
+                        <img src="{{ asset($product->takeImage()) }}" class="d-block w-100" height="300">
+                    </div>
+                @endforeach
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -36,13 +34,13 @@
             @forelse ($products as $product)
                 <div class="col-md-3 my-4">
                     <div class="card">
-                        <a href="#">
+                        <a href="/detail/{{ $product->slug }}">
                             <img src="{{ asset($product->takeImage()) }}" class="card-img-top img" height="250">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <p class="card-text">Rp {{ number_format($product->price, 2, ',', '.') }}</p>
-                            <a href="#" class="btn btn-primary">Detail</a>
+                            <a href="/detail/{{ $product->slug }}" class="btn btn-primary">Detail</a>
                         </div>
                     </div>
                 </div>

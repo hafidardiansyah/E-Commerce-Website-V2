@@ -12,6 +12,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('products.home', [
+            'carouselProducts' => Product::limit(5)->get(),
             'products' => Product::latest()->simplePaginate(8)
         ]);
     }
@@ -19,15 +20,19 @@ class ProductController extends Controller
     public function list_product()
     {
         return view('products.list-product', [
-            'products' => Product::latest()->simplePaginate(16)
+            'products' => Product::latest()->simplePaginate(32)
         ]);
+    }
+
+    public function show(Product $product)
+    {
+        return view('products.show', compact('product'));
     }
 
     public function create()
     {
         return view('products.create', [
             'product' => new Product(),
-
         ]);
     }
 

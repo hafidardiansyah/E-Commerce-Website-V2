@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
 
         <h3 class="mt-4">Best Products</h3>
@@ -9,7 +10,7 @@
             @forelse ($products as $product)
                 <div class="col-md-3 my-4">
                     <div class="card">
-                        <a href="#">
+                        <a href="/detail/{{ $product->slug }}">
                             <img src="{{ asset($product->takeImage()) }}" class="card-img-top img" height="250">
                         </a>
                         <div class="card-body">
