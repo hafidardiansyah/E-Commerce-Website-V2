@@ -89,8 +89,18 @@ class ProductController extends Controller
 
         $product->update($attr);
 
-        session()->flash('success', 'The post was updated.');
+        session()->flash('success', 'The product was updated.');
 
         return redirect('/detail/' . $product->slug);
+    }
+
+    public function delete(Product $product)
+    {
+        \Storage::delete($product->image);
+        $product->delete();
+
+        session()->flash('success', "It wasn't your product.");
+
+        return redirect('/');
     }
 }

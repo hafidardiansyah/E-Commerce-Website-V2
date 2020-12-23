@@ -23,7 +23,42 @@
                         <a href="#" class="btn btn-primary">Buy</a>
                         @if (Auth::user()->role == 0)
                             <a href="/{{ $product->slug }}/edit" class="btn btn-warning">Edit</a>
-                            <a href="#" class="btn btn-danger">Delete</a>
+
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                                Delete
+                            </button>
+
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete?
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h2>{{ $product->name }}</h2>
+                                            <p class="text-secondary fs-6">
+                                                Published on
+                                                {{ $product->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="/{{ $product->slug }}/delete" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
