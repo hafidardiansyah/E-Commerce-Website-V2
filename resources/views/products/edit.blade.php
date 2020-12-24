@@ -11,7 +11,7 @@
                     class="img-thumbnail img-preview">
             </div>
             <div class="col-md-6">
-                <form action="/{{ $product->slug }}/update" method="POST" enctype="multipart/form-data">
+                <form action="/product/{{ $product->slug }}/update" method="POST" enctype="multipart/form-data">
                     @method('patch')
                     @csrf
                     @include('products.partials.form-control')

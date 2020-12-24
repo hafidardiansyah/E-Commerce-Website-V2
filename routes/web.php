@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ProductController};
+use App\Http\Controllers\{ProductController, CartController};
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,8 @@ Route::get('/list-product', [ProductController::class, 'list_product'])->name('l
 
 Auth::routes();
 
-Route::middleware(['auth', 'role'])->group(function () {
+// for admin
+Route::prefix('product')->middleware(['auth', 'role'])->group(function () {
     // create and save product
     Route::get('create', [ProductController::class, 'create'])->name('create');
     Route::post('store', [ProductController::class, 'store'])->name('store');
@@ -39,10 +40,13 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::delete('{product:slug}/delete', [ProductController::class, 'delete']);
 });
 
-Route::middleware('auth')->group(function () {
-    // add product to cart
-    Route::post('add', [ProductController::class, 'add'])->name('add');
+// list cart
+Route::get('/cart', [CartController::class, 'cart'])->middleware('auth')->name('cart');
 
-    // list cart
-    Route::get('cart', [ProductController::class, 'cart'])->name('cart');
+Route::prefix('cart')->middleware('auth')->group(function () {
+    // add product to cart
+    Route::post('add', [CartController::class, 'add'])->name('add');
+
+    // delete product in card
+    Route::delete('{cart:slug}/delete', [CartController::class, 'delete']);
 });

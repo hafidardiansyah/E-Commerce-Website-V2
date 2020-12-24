@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+
     public function index()
     {
         return view('products.home', [
@@ -103,27 +104,8 @@ class ProductController extends Controller
         Storage::delete($product->image);
         $product->delete();
 
-        session()->flash('success', "It wasn't your product.");
+        session()->flash('success', 'The product was deleted.');
 
         return redirect('/');
-    }
-
-    public function add(Request $request)
-    {
-        $cart = new Cart;
-        $cart->product_id = $request->product_id;
-        $cart->user_id = $request->user_id;
-        $cart->save();
-
-        session()->flash('success', 'The product was add to cart.');
-
-        return redirect('/detail/' . $request->slug);
-    }
-
-    public function cart()
-    {
-        $total = 0;
-        $products = Cart::join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', Auth::user()->id)->select('products.*', 'cart.id as cart_id')->get();
-        return view('products.cart', compact('products', 'total'));
     }
 }

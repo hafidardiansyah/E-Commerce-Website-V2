@@ -77,13 +77,15 @@
                                 </li>
                             @endif
                         @else
-                            <a href="{{ route('cart') }}"
-                                class="nav-link{{ request()->segment(1) == 'cart' ? ' active' : '' }}"><i
-                                    class='bx bxs-cart'></i>
-                            </a>
+
+                            @if (Auth::user()->role == 1)
+                                <a href="{{ route('cart') }}"
+                                    class="nav-link{{ request()->segment(1) == 'cart' ? ' active' : '' }}"><i
+                                        class='bx bxs-cart'></i>
+                                </a>
+                            @endif
 
                             <li class="nav-item dropdown">
-
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

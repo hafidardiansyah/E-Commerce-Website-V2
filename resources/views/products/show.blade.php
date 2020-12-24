@@ -21,19 +21,21 @@
                             </small>
                         </p>
 
-                        <form action="{{ route('add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                            <input type="hidden" name="slug" value="{{ $product->slug }}">
-                            <button class="btn btn-primary" type="submit">
-                                <i class='bx bxs-cart-add'></i>
-                                Add to cart
-                            </button>
-                        </form>
+                        @if (Auth::check() && Auth::user()->role === 1)
+                            <form action="{{ route('add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                <input type="hidden" name="slug" value="{{ $product->slug }}">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class='bx bxs-cart-add'></i>
+                                    Add to cart
+                                </button>
+                            </form>
+                        @endif
 
                         @if (Auth::check() && Auth::user()->role === 0)
-                            <a href="/{{ $product->slug }}/edit" class="btn btn-warning">Edit</a>
+                            <a href="/product/{{ $product->slug }}/edit" class="btn btn-warning">Edit</a>
 
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
                                 Delete
@@ -44,7 +46,8 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete?
+                                            <h5 class="modal-title" id="deleteModalLabel">
+                                                Are you sure you want to delete?
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -58,7 +61,7 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="/{{ $product->slug }}/delete" method="POST">
+                                            <form action="/product/{{ $product->slug }}/delete" method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">

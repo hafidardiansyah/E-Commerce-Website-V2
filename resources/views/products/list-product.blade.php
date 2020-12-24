@@ -26,7 +26,7 @@
             @empty
                 <div class="col-md-6">
                     <div class="alert alert-info">
-                        Ther's no post.
+                        Ther's no product.
                     </div>
                 </div>
             @endforelse

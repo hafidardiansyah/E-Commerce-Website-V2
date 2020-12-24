@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="alert alert-success">
-                    {{ session()->get('success') }}
+                    <i class='bx bx-bell'></i> {{ session()->get('success') }}
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="alert alert-danger">
-                    {{ session()->get('error') }}
+                    <i class='bx bx-error'></i> {{ session()->get('error') }}
                 </div>
             </div>
         </div>
