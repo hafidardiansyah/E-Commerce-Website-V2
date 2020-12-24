@@ -20,8 +20,19 @@
                                 {{ $product->created_at->diffForHumans() }}
                             </small>
                         </p>
-                        <a href="#" class="btn btn-primary">Buy</a>
-                        @if (Auth::user()->role == 0)
+
+                        <form action="{{ route('add') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="slug" value="{{ $product->slug }}">
+                            <button class="btn btn-primary" type="submit">
+                                <i class='bx bxs-cart-add'></i>
+                                Add to cart
+                            </button>
+                        </form>
+
+                        @if (Auth::check() && Auth::user()->role === 0)
                             <a href="/{{ $product->slug }}/edit" class="btn btn-warning">Edit</a>
 
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
@@ -60,6 +71,7 @@
                                 </div>
                             </div>
                         @endif
+
                     </div>
                 </div>
             </div>

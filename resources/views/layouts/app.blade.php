@@ -19,6 +19,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -84,7 +87,7 @@
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -107,19 +110,23 @@
 
     <script>
         function previewImg() {
+
             // Img preview & file input
             const cover = document.querySelector('#image');
             const coverLabel = document.querySelector('.custom-file-label');
             const imgPreview = document.querySelector('.img-preview');
             console.log(`Cover Label : ${coverLabel}`);
+
             // file input
             coverLabel.textContent = cover.files[0].name;
+
             // Image preview
             const fileCover = new FileReader();
             fileCover.readAsDataURL(cover.files[0]);
             fileCover.onload = function(e) {
                 imgPreview.src = e.target.result;
             }
+
         }
 
     </script>

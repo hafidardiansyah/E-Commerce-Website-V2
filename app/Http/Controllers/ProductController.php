@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -78,7 +81,7 @@ class ProductController extends Controller
         ]);
 
         if (request()->file('image')) {
-            \Storage::delete($product->image);
+            Storage::delete($product->image);
             $image = request()->file('image')->store('images');
         } else {
             $image = $product->image;
@@ -96,11 +99,23 @@ class ProductController extends Controller
 
     public function delete(Product $product)
     {
-        \Storage::delete($product->image);
+        Storage::delete($product->image);
         $product->delete();
 
         session()->flash('success', "It wasn't your product.");
 
         return redirect('/');
+    }
+
+    public function add(Request $request)
+    {
+        $cart = new Cart;
+        $cart->product_id = $request->product_id;
+        $cart->user_id = $request->user_id;
+        $cart->save();
+
+        session()->flash('success', 'The product was add to cart.');
+
+        return redirect('/detail/' . $request->slug);
     }
 }
