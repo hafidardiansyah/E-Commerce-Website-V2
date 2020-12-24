@@ -52,9 +52,12 @@
 
                     <ul class="navbar-nav">
                         <form action="{{ route('search') }}" method="GET" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Enter keyword..."
-                                aria-label="Search" name="keyword" autocomplete="off" autofocus>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            <input class="form-control mr-sm-2" type="text" placeholder="Enter keyword..."
+                                aria-label="Search" name="keyword" autocomplete="off"
+                                value="{{ $_GET['keyword'] ?? '' }}">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                Search
+                            </button>
                         </form>
                     </ul>
 
@@ -74,6 +77,11 @@
                                 </li>
                             @endif
                         @else
+                            <a href="{{ route('cart') }}"
+                                class="nav-link{{ request()->segment(1) == 'cart' ? ' active' : '' }}"><i
+                                    class='bx bxs-cart'></i>
+                            </a>
+
                             <li class="nav-item dropdown">
 
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -86,9 +94,7 @@
                                         <a class="dropdown-item" href="{{ route('create') }}">New Product</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

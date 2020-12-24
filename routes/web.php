@@ -42,4 +42,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 Route::middleware('auth')->group(function () {
     // add product to cart
     Route::post('add', [ProductController::class, 'add'])->name('add');
+
+    // list cart
+    Route::get('cart', [ProductController::class, 'cart'])->name('cart');
 });

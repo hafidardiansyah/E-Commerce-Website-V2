@@ -9,4 +9,9 @@ class Cart extends Model
 {
     use HasFactory;
     public $table = "cart";
+
+    public function takeImage()
+    {
+        return "/storage/" . $this->image;
+    }
 }

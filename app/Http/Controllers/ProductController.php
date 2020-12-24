@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -117,5 +118,12 @@ class ProductController extends Controller
         session()->flash('success', 'The product was add to cart.');
 
         return redirect('/detail/' . $request->slug);
+    }
+
+    public function cart()
+    {
+        $total = 0;
+        $products = Cart::join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', Auth::user()->id)->select('products.*', 'cart.id as cart_id')->get();
+        return view('products.cart', compact('products', 'total'));
     }
 }
