@@ -29,15 +29,21 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show(Product $product)
+    public function detail(Product $product)
     {
-        return view('products.show', compact('product'));
+        $slug = $product->slug ?? '';
+        $product_id = $product->id ?? 0;
+        $user_id = Auth::user()->id ?? 0;
+        $role = Auth::check() ? Auth::user()->role : 1;
+
+        return view('products.detail', compact('product', 'slug', 'product_id', 'user_id', 'role'));
     }
 
     public function search()
     {
         $keyword = request('keyword');
         $products = Product::where('name', 'like', "%$keyword%")->latest()->simplePaginate(32);
+
         return view('products.list-product', compact('products'));
     }
 
@@ -48,10 +54,13 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(ProductRequest $request)
+    public function save(Request $request)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,jpg,png|max:1024'
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:1024',
+            'name' => 'required|min:3|unique:products',
+            'price' => 'required',
+            'description' => 'required',
         ]);
 
         $attr = $request->all();
@@ -76,10 +85,13 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(ProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,jpg,png|max:1024'
+            'image' => 'image|mimes:jpeg,jpg,png|max:1024',
+            'name' => 'required|min:3|unique:products,name,' . $product->id,
+            'price' => 'required',
+            'description' => 'required',
         ]);
 
         if (request()->file('image')) {
@@ -91,6 +103,7 @@ class ProductController extends Controller
 
         $attr = $request->all();
         $attr['image'] = $image;
+        $attr['slug'] = Str::slug($request->name);
 
         $product->update($attr);
 

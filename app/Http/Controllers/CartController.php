@@ -24,6 +24,7 @@ class CartController extends Controller
         $currentPage = $_GET['page'] ?? 1;
         $i = 1 + $perPage * ($currentPage - 1);
         $products = Cart::join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', Auth::user()->id)->select('products.*', 'cart.id as cart_id')->simplePaginate($perPage);
+
         return view('products.cart', compact('products', 'i'));
     }
 

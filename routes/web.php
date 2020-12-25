@@ -18,7 +18,7 @@ use App\Http\Controllers\{ProductController, CartController};
 // home
 Route::get('/', [ProductController::class, 'index']);
 // detail product
-Route::get('/detail/{product:slug}', [ProductController::class, 'show']);
+Route::get('/detail/{product:slug}', [ProductController::class, 'detail']);
 // search product
 Route::get('/list-product/search', [ProductController::class, 'search'])->name('search');
 // list product
@@ -30,7 +30,7 @@ Auth::routes();
 Route::prefix('product')->middleware(['auth', 'role'])->group(function () {
     // create and save product
     Route::get('create', [ProductController::class, 'create'])->name('create');
-    Route::post('store', [ProductController::class, 'store'])->name('store');
+    Route::post('save', [ProductController::class, 'save'])->name('save');
 
     // edit and update product
     Route::get('{product:slug}/edit', [ProductController::class, 'edit']);

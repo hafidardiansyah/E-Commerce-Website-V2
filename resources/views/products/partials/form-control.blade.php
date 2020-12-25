@@ -8,7 +8,9 @@
                 {{ $message }}
             </div>
         @enderror
-        <label class="custom-file-label" for="image">Choose image product!</label>
+        <label class="custom-file-label" for="image">
+            {{ $product->image != null ? $product->image : 'Choose image product' }}
+        </label>
     </div>
 </div>
 

@@ -4,12 +4,15 @@
 
     <div class="container">
 
-        <div class="row">
+        <div class="row  my-4">
 
-            <div class="col-md-6">
-                <img src="{{ asset($product->takeImage()) }}" alt="{{ $product->slug }} Image"
-                    class="img-thumbnail img-preview">
-            </div>
+            @if ($product->image)
+                <div class="col-md-6">
+                    <h6>View image</h6>
+                    <img src="{{ asset($product->takeImage()) }}" alt="{{ $product->slug }} Image"
+                        class="img-thumbnail img-preview">
+                </div>
+            @endif
             <div class="col-md-6">
                 <form action="/product/{{ $product->slug }}/update" method="POST" enctype="multipart/form-data">
                     @method('patch')

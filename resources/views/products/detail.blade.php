@@ -4,12 +4,14 @@
 
     <div class="container">
 
-        <div class="card mb-3">
+        <div class="card mb-3 my-4">
             <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%"
-                        alt="{{ $product->slug }} Image">
-                </div>
+                @if ($product->image)
+                    <div class="col-md-4">
+                        <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%"
+                            alt="{{ $product->slug }} Image">
+                    </div>
+                @endif
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
@@ -21,12 +23,12 @@
                             </small>
                         </p>
 
-                        @if (Auth::check() && Auth::user()->role === 1)
+                        @if ($role != 0)
                             <form action="{{ route('add') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                <input type="hidden" name="slug" value="{{ $product->slug }}">
+                                <input type="hidden" name="product_id" value="{{ $product_id }}">
+                                <input type="hidden" name="user_id" value="{{ $user_id }}">
+                                <input type="hidden" name="slug" value="{{ $slug }}">
                                 <button class="btn btn-primary" type="submit">
                                     <i class='bx bxs-cart-add'></i>
                                     Add to cart
