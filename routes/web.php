@@ -27,7 +27,7 @@ Route::get('/list-product', [ProductController::class, 'list_product'])->name('l
 Auth::routes();
 
 // for admin
-Route::prefix('product')->middleware(['auth', 'role'])->group(function () {
+Route::prefix('product')->middleware(['auth', 'admin'])->group(function () {
     // create and save product
     Route::get('create', [ProductController::class, 'create'])->name('create');
     Route::post('save', [ProductController::class, 'save'])->name('save');
@@ -41,12 +41,14 @@ Route::prefix('product')->middleware(['auth', 'role'])->group(function () {
 });
 
 // list cart
-Route::get('/cart', [CartController::class, 'cart'])->middleware('auth')->name('cart');
+Route::get('/cart', [CartController::class, 'cart'])->middleware(['auth', 'user'])->name('cart');
 
-Route::prefix('cart')->middleware('auth')->group(function () {
+Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
     // add product to cart
     Route::post('add', [CartController::class, 'add'])->name('add');
 
     // delete product in card
     Route::delete('{cart:slug}/delete', [CartController::class, 'delete']);
+
+    Route::get('order', [CartController::class, 'order'])->name('order');
 });

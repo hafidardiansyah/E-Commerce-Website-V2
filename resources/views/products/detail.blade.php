@@ -6,12 +6,10 @@
 
         <div class="card mb-3 my-4">
             <div class="row no-gutters">
-                @if ($product->image)
-                    <div class="col-md-4">
-                        <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%"
-                            alt="{{ $product->slug }} Image">
-                    </div>
-                @endif
+                <div class="col-md-4">
+                    <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%"
+                        alt="{{ $product->slug }} Image">
+                </div>
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
