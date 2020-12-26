@@ -43,8 +43,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a href="{{ route('list-product') }}"
-                                class="nav-link{{ request()->segment(1) == 'list-product' ? ' active' : '' }}">
+                            <a href="{{ route('products') }}"
+                                class="nav-link{{ request()->segment(1) == 'products' ? ' active' : '' }}">
                                 List Product
                             </a>
                         </li>

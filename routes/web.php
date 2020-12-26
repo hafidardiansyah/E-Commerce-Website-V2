@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ProductController, CartController};
+use App\Http\Controllers\{ProductController, CartController, CategoryController};
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +18,11 @@ use App\Http\Controllers\{ProductController, CartController};
 // home
 Route::get('/', [ProductController::class, 'index']);
 // detail product
-Route::get('/detail/{product:slug}', [ProductController::class, 'detail']);
+Route::get('detail/{product:slug}', [ProductController::class, 'detail']);
 // search product
-Route::get('/list-product/search', [ProductController::class, 'search'])->name('search');
+Route::get('products/search', [ProductController::class, 'search'])->name('search');
 // list product
-Route::get('/list-product', [ProductController::class, 'list_product'])->name('list-product');
+Route::get('products', [ProductController::class, 'products'])->name('products');
 
 Auth::routes();
 
@@ -41,8 +41,9 @@ Route::prefix('product')->middleware(['auth', 'admin'])->group(function () {
 });
 
 // list cart
-Route::get('/cart', [CartController::class, 'cart'])->middleware(['auth', 'user'])->name('cart');
+Route::get('cart', [CartController::class, 'cart'])->middleware(['auth', 'user'])->name('cart');
 
+// for user
 Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
     // add product to cart
     Route::post('add', [CartController::class, 'add'])->name('add');
@@ -52,3 +53,6 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
 
     Route::get('order', [CartController::class, 'order'])->name('order');
 });
+
+// category
+Route::get('products/{category:slug}', [CategoryController::class, 'category']);

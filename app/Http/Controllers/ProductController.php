@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,30 +13,32 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-
     public function index()
     {
         return view('products.home', [
             'carouselProducts' => Product::limit(5)->get(),
-            'products' => Product::latest()->simplePaginate(8)
+            'products' => Product::latest()->simplePaginate(32),
+            'categories' => Category::latest()->simplePaginate(10)
         ]);
     }
 
-    public function list_product()
+    public function products()
     {
-        return view('products.list-product', [
-            'products' => Product::latest()->simplePaginate(32)
+        return view('products.products', [
+            'products' => Product::latest()->simplePaginate(32),
+            'categories' => Category::latest()->simplePaginate(10)
         ]);
     }
 
     public function detail(Product $product)
     {
-        $slug = $product->slug ?? '';
-        $product_id = $product->id ?? 0;
-        $user_id = Auth::user()->id ?? 0;
-        $role = Auth::check() ? Auth::user()->role : 1;
-
-        return view('products.detail', compact('product', 'slug', 'product_id', 'user_id', 'role'));
+        return view('products.detail', [
+            'product' => $product,
+            'slug' => $product->slug ?? '',
+            'product_id' => $product->id ?? 0,
+            'user_id' => Auth::user()->id ?? 0,
+            'role' => Auth::check() ? Auth::user()->role : 1
+        ]);
     }
 
     public function search()
@@ -43,13 +46,14 @@ class ProductController extends Controller
         $keyword = request('keyword');
         $products = Product::where('name', 'like', "%$keyword%")->latest()->simplePaginate(32);
 
-        return view('products.list-product', compact('products'));
+        return view('products.products', compact('products'));
     }
 
     public function create()
     {
         return view('products.create', [
             'product' => new Product(),
+            'categories' => Category::get()
         ]);
     }
 
@@ -60,16 +64,16 @@ class ProductController extends Controller
             'name' => 'required|min:3|unique:products',
             'price' => 'required',
             'description' => 'required',
+            'category' => 'required'
         ]);
 
         $attr = $request->all();
-
-        $slug = Str::slug($request->name);
-        $attr['slug'] = $slug;
-
         $image = request()->file('image') ? request()->file('image')->store('images') : null;
+        $slug = Str::slug($request->name);
 
+        $attr['category_id'] = request('category');
         $attr['image'] = $image;
+        $attr['slug'] = $slug;
 
         // * Create new post
         Product::create($attr);
@@ -81,7 +85,10 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        return view('products.edit', [
+            'product' => $product,
+            'categories' => Category::get()
+        ]);
     }
 
     public function update(Request $request, Product $product)
@@ -101,6 +108,8 @@ class ProductController extends Controller
         }
 
         $attr = $request->all();
+
+        $attr['category_id'] =  request('category');
         $attr['image'] = $image;
         $attr['slug'] = Str::slug($request->name);
 
