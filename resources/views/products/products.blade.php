@@ -7,7 +7,8 @@
         <div class="row">
             <div class="col-md-8">
                 <h3 class="mt-4">Best Products</h3>
-                <div class="row row-cols-1 row-cols-md-2">
+                <hr>
+                <div class="row row-cols-1 row-cols-md-2" style="margin-top: -20px">
                     @forelse ($products as $product)
                         <div class="col-md-4 my-4">
                             <div class="card">
@@ -34,7 +35,8 @@
             </div>
 
             <div class="col-md-4">
-                <h3 class="my-4">Categories</h3>
+                <h3 class="mt-4">Categories</h3>
+                <hr>
                 <ul class="list-group">
                     @foreach ($categories as $category)
                         <li class="list-group-item{{ request()->is('products/' . $category->slug) ? ' active' : '' }}">

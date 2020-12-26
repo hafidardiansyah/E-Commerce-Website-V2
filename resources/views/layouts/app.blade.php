@@ -22,6 +22,7 @@
 
     <!-- Icons -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body>
@@ -67,13 +68,17 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link{{ request()->segment(1) == 'login' ? ' active' : '' }}"
+                                        href="{{ route('login') }}">{{ __('Login') }}
+                                    </a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link{{ request()->segment(1) == 'register' ? ' active' : '' }}"
+                                        href="{{ route('register') }}">{{ __('Register') }}
+                                    </a>
                                 </li>
                             @endif
                         @else
@@ -123,7 +128,6 @@
             const cover = document.querySelector('#image');
             const coverLabel = document.querySelector('.custom-file-label');
             const imgPreview = document.querySelector('.img-preview');
-            console.log(`Cover Label : ${coverLabel}`);
 
             // file input
             coverLabel.textContent = cover.files[0].name;

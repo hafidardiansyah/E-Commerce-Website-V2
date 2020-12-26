@@ -5,8 +5,8 @@
     <div class="container">
 
         <h3 class="text-dark mt-4">My Orders</h3>
-
-        <table class="table table-hover">
+        <hr>
+        <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th scope="col">No</th>
@@ -17,12 +17,10 @@
                 </tr>
             </thead>
             <tbody>
-
                 @forelse ($products as $product)
                     @php
-                    $total += $product->price;
+                    $total += $product->price * $product->order;
                     @endphp
-
                     <tr>
                         <th scope="row">{{ $i++ }}</th>
                         <td>
@@ -32,9 +30,23 @@
                         <td>{{ $product->name }}</td>
                         <td>Rp {{ number_format($product->price, 2, ',', '.') }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">
-                                <i class='bx bxs-trash'></i> Delete
-                            </button>
+                            <div style="clear: both">
+                                <form action="/cart/{{ $product->cart_id }}/plus" method="POST" style="display: inline">
+                                    @csrf
+                                    <input type="number" name="order" class="form-control form-control-sm mb-2 order"
+                                        value="{{ $product->order }}" disabled>
+                                    <button type="submit" class="btn btn-sm btn-success plus">
+                                        <i class='bx bxs-plus-circle'></i>
+                                        Plus product
+                                    </button>
+                                </form>
+
+                                <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal"
+                                    data-target="#deleteModal">
+                                    <i class='bx bxs-trash'></i>
+                                    Delete
+                                </button>
+                            </div>
 
                             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
                                 aria-hidden="true">
@@ -77,8 +89,6 @@
                         </div>
                     </div>
                 @endforelse
-
-
                 <tr>
                     <td colspan="4" class="text-center">
                         <strong>Total</strong>: Rp
@@ -88,11 +98,19 @@
                         <a href="{{ route('order') }}" class="btn btn-sm btn-primary"><i class='bx bxs-cart'></i> Order</a>
                     </td>
                 </tr>
-
             </tbody>
         </table>
 
         {{ $products->links() }}
     </div>
+    {{--
+    <script>
+        const order = document.querySelector('.order');
+        const plus = document.querySelector('.plus');
+        plus.addEventListener('click', function() {
+            order.value++
+        })
+
+    </script> --}}
 
 @endsection

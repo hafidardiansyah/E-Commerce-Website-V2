@@ -7,8 +7,8 @@
         <a href="/products/{{ $product->category->slug }}" class="text-decoration-none text-dark">
             {{ $product->category->name }}
         </a>
-
-        <div class="card mb-3 my-4">
+        <hr>
+        <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="{{ asset($product->takeImage()) }}" class="card-img" height="100%"
