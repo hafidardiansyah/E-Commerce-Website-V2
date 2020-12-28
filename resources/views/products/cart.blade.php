@@ -35,21 +35,19 @@
                                     @csrf
                                     <input type="number" name="order" class="form-control form-control-sm mb-2 order"
                                         value="{{ $product->order }}" disabled>
-                                    <button type="submit" class="btn btn-sm btn-success plus">
-                                        <i class='bx bxs-plus-circle'></i>
-                                        Plus product
+                                    <button type="submit" class="btn btn-sm btn-success plus"><i class='bx bxs-plus-circle'></i>
+                                        Plus
                                     </button>
                                 </form>
 
                                 <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal"
-                                    data-target="#deleteModal">
-                                    <i class='bx bxs-trash'></i>
+                                    data-target="#deleteModal{{ $product->cart_id }}"><i class='bx bxs-trash'></i>
                                     Delete
                                 </button>
                             </div>
 
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                                aria-hidden="true">
+                            <div class="modal fade" id="deleteModal{{ $product->cart_id }}" tabindex="-1"
+                                aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">

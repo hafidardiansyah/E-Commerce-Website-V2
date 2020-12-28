@@ -28,11 +28,23 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
+        $cart = DB::table('cart')->where('product_id', $request->product_id)->where('user_id', Auth::user()->id);
+        if ($cart->get()->count() > 0) {
+            $order = $cart->pluck('order')[0];
+            $order += 1;
+
+            DB::table('cart')->where('product_id', $request->product_id)->where('user_id', Auth::user()->id)->update(['order' => $order]);
+
+            session()->flash('success', 'Product has been added.');
+
+            return redirect('/cart');
+        }
         $cart = new Cart();
 
         $cart->product_id = $request->product_id;
-        $cart->user_id = $request->user_id;
+        $cart->user_id = Auth::user()->id;
         $cart->order = 1;
+
         $cart->save();
 
         session()->flash('success', 'The product was add to cart.');
@@ -40,21 +52,21 @@ class CartController extends Controller
         return redirect('/detail/' . $request->slug);
     }
 
-    public function plus($cart)
+    public function plus($cart_id)
     {
-        $order = DB::table('cart')->where('id', $cart)->sum('order');
+        $order = DB::table('cart')->where('id', $cart_id)->pluck('order')[0];
         $order += 1;
 
-        DB::table('cart')->where('id', $cart)->update(['order' => $order]);
+        DB::table('cart')->where('id', $cart_id)->update(['order' => $order]);
 
-        session()->flash('success', 'The product was add.');
+        session()->flash('success', 'Product has been added.');
 
         return redirect('/cart');
     }
 
-    public function delete($cart)
+    public function delete($cart_id)
     {
-        Cart::destroy($cart);
+        DB::table('cart')->where('id', $cart_id)->delete();
 
         session()->flash('success', 'The product was deleted.');
 

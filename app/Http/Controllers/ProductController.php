@@ -34,9 +34,6 @@ class ProductController extends Controller
     {
         return view('products.detail', [
             'product' => $product,
-            'slug' => $product->slug ?? '',
-            'product_id' => $product->id ?? 0,
-            'user_id' => Auth::user()->id ?? 0,
             'role' => Auth::check() ? Auth::user()->role : 1
         ]);
     }

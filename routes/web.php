@@ -48,14 +48,14 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
     // add product to cart
     Route::post('add', [CartController::class, 'add'])->name('add');
 
-    // delete product in card
-    Route::delete('{cart:slug}/delete', [CartController::class, 'delete']);
+    // delete product in cart
+    Route::delete('{cart_id:slug}/delete', [CartController::class, 'delete']);
 
     // order
     Route::get('order', [CartController::class, 'order'])->name('order');
 
     // plus
-    Route::post('{cart:slug}/plus', [CartController::class, 'plus']);
+    Route::post('{cart_id:slug}/plus', [CartController::class, 'plus']);
 });
 
 // category

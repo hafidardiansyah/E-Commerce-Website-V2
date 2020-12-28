@@ -24,10 +24,8 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-md-6">
-                            <div class="alert alert-info">
-                                Ther's no product.
-                            </div>
+                        <div class="alert alert-info my-3 ml-3">
+                            Ther's no product.
                         </div>
                     @endforelse
                 </div>

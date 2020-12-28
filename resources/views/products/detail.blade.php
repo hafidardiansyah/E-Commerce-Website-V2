@@ -28,9 +28,8 @@
                         @if ($role != 0)
                             <form action="{{ route('add') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $product_id }}">
-                                <input type="hidden" name="user_id" value="{{ $user_id }}">
-                                <input type="hidden" name="slug" value="{{ $slug }}">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="slug" value="{{ $product->slug }}">
                                 <button class="btn btn-primary" type="submit">
                                     <i class='bx bxs-cart-add'></i>
                                     Add to cart
