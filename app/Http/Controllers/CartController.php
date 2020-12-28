@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,13 +17,15 @@ class CartController extends Controller
 
     public function cart()
     {
-        $total = 0;
-        $perPage = 10;
-        $currentPage = $_GET['page'] ?? 1;
-        $i = 1 + $perPage * ($currentPage - 1);
-        $products = Cart::join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', Auth::user()->id)->select('products.*', 'cart.id as cart_id', 'cart.order')->simplePaginate($perPage);
+        if (DB::table('cart')->where('user_id', Auth::user()->id)) {
+            $total = 0;
+            $perPage = 10;
+            $currentPage = $_GET['page'] ?? 1;
+            $i = 1 + $perPage * ($currentPage - 1);
+            $products = Cart::join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', Auth::user()->id)->select('products.*', 'cart.id as cart_id', 'cart.order')->simplePaginate($perPage);
 
-        return view('products.cart', compact('products', 'total', 'i'));
+            return view('products.cart', compact('products', 'total', 'i'));
+        }
     }
 
     public function add(Request $request)
@@ -101,7 +104,7 @@ class CartController extends Controller
             $total += $product->price * $product->order;
         }
 
-        return view('products.checkout', compact('total', 'products', 'user'));
+        return view('products.checkout', compact('total', 'products', 'user', 'payments'));
     }
 
     public function order(Request $request)
@@ -110,5 +113,30 @@ class CartController extends Controller
             'address' => 'required',
             'payment_method' => 'required'
         ]);
+
+        DB::table('users')->where('id', Auth::user()->id)->update(['address' => $request->address]);
+
+        $carts = DB::table('cart')->where('user_id', Auth::user()->id)->get();
+
+        foreach ($carts as $cart) {
+            $order = new Order;
+
+            $order->product_id = $cart->product_id;
+            $order->user_id = $cart->user_id;
+            $order->order = $cart->order;
+            $order->code = '';
+            $order->payment_method = $request->payment_method;
+            $order->payment_status = 'unpaid';
+            $order->delivery_status = 'packaging';
+            $order->created_at = now();
+            $order->updated_at = now();
+            $order->save();
+
+            DB::table('cart')->where('user_id', Auth::user()->id)->delete();
+        }
+
+        session()->flash('success', 'The product was ordered.');
+
+        return redirect('/');
     }
 }

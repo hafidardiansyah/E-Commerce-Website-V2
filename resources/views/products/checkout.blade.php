@@ -54,16 +54,16 @@
                 <form action="{{ route('order') }}" method="POST">
                     @csrf
                     <h6>Select payment method</h6>
-                    {{--
+
                     @foreach ($payments as $payment)
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input @error('payment') is-invalid @enderror" type="radio"
-                                value="{{ $payment->id }}" id="{{ $payment->id }}" name="payment">
+                        <div class="form-check form-check-inline mb-3">
+                            <input class="form-check-input @error('payment_method') is-invalid @enderror" type="radio"
+                                value="{{ $payment->id }}" id="{{ $payment->id }}" name="payment_method">
                             <label class="form-check-label" for="{{ $payment->id }}">
                                 {{ $payment->name }}
                             </label>
                         </div>
-                    @endforeach --}}
+                    @endforeach
 
                     <div class="mb-3">
                         <label for="address">Address</label>
