@@ -56,6 +56,9 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
 
     // plus
     Route::post('{cart_id:slug}/plus', [CartController::class, 'plus']);
+
+    // minus
+    Route::post('{cart_id:slug}/minus', [CartController::class, 'minus']);
 });
 
 // category

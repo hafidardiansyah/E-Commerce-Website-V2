@@ -40,6 +40,14 @@
                                     </button>
                                 </form>
 
+                                <form action="/cart/{{ $product->cart_id }}/minus" method="POST" style="display: inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success minus"><i
+                                            class='bx bxs-minus-circle'></i>
+                                        Minus
+                                    </button>
+                                </form>
+
                                 <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal"
                                     data-target="#deleteModal{{ $product->cart_id }}"><i class='bx bxs-trash'></i>
                                     Delete

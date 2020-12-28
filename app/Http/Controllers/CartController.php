@@ -64,6 +64,26 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
+    public function minus($cart_id)
+    {
+        $order = DB::table('cart')->where('id', $cart_id)->pluck('order')[0];
+        if ($order > 1) {
+            $order -= 1;
+
+            DB::table('cart')->where('id', $cart_id)->update(['order' => $order]);
+
+            session()->flash('success', 'The product has been reduced.');
+
+            return redirect('/cart');
+        } else {
+            DB::table('cart')->where('id', $cart_id)->delete();
+
+            session()->flash('success', 'The product was deleted.');
+
+            return redirect('/cart');
+        }
+    }
+
     public function delete($cart_id)
     {
         DB::table('cart')->where('id', $cart_id)->delete();
