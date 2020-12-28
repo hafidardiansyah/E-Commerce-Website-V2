@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('product_id');
             $table->integer('user_id');
             $table->integer('order');
-            $table->string('code', 50);
+            $table->text('description');
             $table->string('payment_method', 10);
             $table->string('payment_status', 10);
             $table->string('delivery_status', 50);

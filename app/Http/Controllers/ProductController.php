@@ -92,7 +92,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'image' => 'image|mimes:jpeg,jpg,png|max:1024',
-            'name' => 'required|min:3||unique:products,name,' . $product->id,
+            'name' => 'required|min:3|unique:products,name,' . $product->id,
             'price' => 'required',
             'description' => 'required',
         ]);

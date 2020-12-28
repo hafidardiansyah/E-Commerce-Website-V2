@@ -124,7 +124,7 @@ class CartController extends Controller
             $order->product_id = $cart->product_id;
             $order->user_id = $cart->user_id;
             $order->order = $cart->order;
-            $order->code = '';
+            $order->description = $request->description;
             $order->payment_method = $request->payment_method;
             $order->payment_status = 'unpaid';
             $order->delivery_status = 'packaging';
