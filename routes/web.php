@@ -51,8 +51,11 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
     // delete product in cart
     Route::delete('{cart_id:slug}/delete', [CartController::class, 'delete']);
 
-    // order
-    Route::get('order', [CartController::class, 'order'])->name('order');
+    // checkout
+    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+
+    // order now
+    Route::post('order', [CartController::class, 'order'])->name('order');
 
     // plus
     Route::post('{cart_id:slug}/plus', [CartController::class, 'plus']);

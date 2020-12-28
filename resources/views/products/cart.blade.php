@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <h3 class="text-dark mt-4">My Orders</h3>
+        <h3 class="text-dark">My Orders</h3>
         <hr>
         <table class="table table-hover table-bordered">
             <thead>
@@ -13,6 +13,7 @@
                     <th scope="col">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Order</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -28,31 +29,30 @@
                                 class="rounded" height="50">
                         </td>
                         <td>{{ $product->name }}</td>
-                        <td>Rp {{ number_format($product->price, 2, ',', '.') }}</td>
+                        <td>Rp {{ number_format($product->price * $product->order, 2, ',', '.') }}</td>
                         <td>
-                            <div style="clear: both">
-                                <form action="/cart/{{ $product->cart_id }}/plus" method="POST" style="display: inline">
+                            <div class="clearfix">
+                                <input type="number" name="order" class="form-control form-control-sm"
+                                    value="{{ $product->order }}" disabled>
+                                <form action="/cart/{{ $product->cart_id }}/minus" method="POST" style="display:inline">
                                     @csrf
-                                    <input type="number" name="order" class="form-control form-control-sm mb-2 order"
-                                        value="{{ $product->order }}" disabled>
-                                    <button type="submit" class="btn btn-sm btn-success plus"><i class='bx bxs-plus-circle'></i>
-                                        Plus
-                                    </button>
-                                </form>
-
-                                <form action="/cart/{{ $product->cart_id }}/minus" method="POST" style="display: inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-success minus"><i
-                                            class='bx bxs-minus-circle'></i>
+                                    <button type="submit" class="btn btn-sm btn-danger mt-2"><i class='bx bxs-minus-circle'></i>
                                         Minus
                                     </button>
                                 </form>
-
-                                <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal"
-                                    data-target="#deleteModal{{ $product->cart_id }}"><i class='bx bxs-trash'></i>
-                                    Delete
-                                </button>
+                                <form action="/cart/{{ $product->cart_id }}/plus" method="POST" class="float-left mr-2 mt-2">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success"><i class='bx bxs-plus-circle'></i>
+                                        Plus
+                                    </button>
+                                </form>
                             </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                                data-target="#deleteModal{{ $product->cart_id }}"><i class='bx bxs-trash'></i>
+                                Delete
+                            </button>
 
                             <div class="modal fade" id="deleteModal{{ $product->cart_id }}" tabindex="-1"
                                 aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -96,12 +96,14 @@
                     </div>
                 @endforelse
                 <tr>
-                    <td colspan="4" class="text-center">
+                    <td colspan="5" class="text-center">
                         <strong>Total</strong>: Rp
                         {{ number_format($total, 2, ',', '.') }}
                     </td>
                     <td>
-                        <a href="{{ route('order') }}" class="btn btn-sm btn-primary"><i class='bx bxs-cart'></i> Order</a>
+                        <a href="{{ route('checkout') }}" class="btn btn-sm btn-primary">
+                            Checkout
+                        </a>
                     </td>
                 </tr>
             </tbody>

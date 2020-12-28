@@ -6,7 +6,7 @@
 
         <div class="row">
             <div class="col-md-8">
-                <h3 class="mt-4">Best Products</h3>
+                <h3 class="text-dark">Best Products</h3>
                 <hr>
                 <div class="row row-cols-1 row-cols-md-2" style="margin-top: -20px">
                     @forelse ($products as $product)
@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-md-4">
-                <h3 class="mt-4">Categories</h3>
+                <h3 class="text-dark">Categories</h3>
                 <hr>
                 <ul class="list-group">
                     @foreach ($categories as $category)

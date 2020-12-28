@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <div class="row  my-4">
+        <div class="row">
 
             <div class="col-md-6">
                 <h6>View image</h6>

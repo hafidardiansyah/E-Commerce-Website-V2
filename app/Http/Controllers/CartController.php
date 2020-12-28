@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -72,16 +71,13 @@ class CartController extends Controller
 
             DB::table('cart')->where('id', $cart_id)->update(['order' => $order]);
 
-            session()->flash('success', 'The product has been reduced.');
-
-            return redirect('/cart');
-        } else {
-            DB::table('cart')->where('id', $cart_id)->delete();
-
-            session()->flash('success', 'The product was deleted.');
+            session()->flash('success', 'Product has been reduced.');
 
             return redirect('/cart');
         }
+        session()->flash('error', 'Product cannot be reduced.');
+
+        return redirect('/cart');
     }
 
     public function delete($cart_id)
@@ -93,12 +89,26 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
-    public function order()
+    public function checkout()
     {
+        $total = 0;
         $userId = Auth::user()->id;
-        $total = DB::table('cart')->join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', $userId)->sum('products.price');
-        $products = DB::table('cart')->join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', $userId)->select('products.*', 'cart.id as cart_id')->get();
+        $user = DB::table('users')->where('id', $userId)->pluck('address')[0];
+        $payments = DB::table('payments')->where('active', 1)->get();
+        $products = DB::table('cart')->join('products', 'cart.product_id', '=', 'products.id')->where('cart.user_id', $userId)->select('products.*', 'cart.id as cart_id', 'cart.order')->get();
 
-        return view('products.order', compact('total', 'products'));
+        foreach ($products as $product) {
+            $total += $product->price * $product->order;
+        }
+
+        return view('products.checkout', compact('total', 'products', 'user'));
+    }
+
+    public function order(Request $request)
+    {
+        $request->validate([
+            'address' => 'required',
+            'payment_method' => 'required'
+        ]);
     }
 }
