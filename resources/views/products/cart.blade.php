@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <h3 class="text-dark">My Orders</h3>
+        <h3 class="text-dark">My Cart</h3>
         <hr>
         <table class="table table-hover table-bordered">
             <thead>
@@ -87,13 +87,13 @@
                         </td>
                     </tr>
                 @empty
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="alert alert-info">
-                                Ther's no product.
-                            </div>
-                        </div>
-                    </div>
+                    <?php echo "
+                    <script>
+                        alert('Empty cart!');
+                        document.location.href = 'products';
+
+                    </script>
+                    "; ?>
                 @endforelse
                 <tr>
                     <td colspan="5" class="text-center">
@@ -111,14 +111,5 @@
 
         {{ $products->links() }}
     </div>
-    {{--
-    <script>
-        const order = document.querySelector('.order');
-        const plus = document.querySelector('.plus');
-        plus.addEventListener('click', function() {
-            order.value++
-        })
-
-    </script> --}}
 
 @endsection

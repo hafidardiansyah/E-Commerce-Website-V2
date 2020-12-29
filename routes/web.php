@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ProductController, CartController, CategoryController};
+use App\Http\Controllers\{ProductController, CartController, CategoryController, OrderController};
 
 /*
 |--------------------------------------------------------------------------
@@ -54,14 +54,19 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
     // checkout
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 
-    // order now
-    Route::post('order', [CartController::class, 'order'])->name('order');
-
     // plus
     Route::post('{cart_id:slug}/plus', [CartController::class, 'plus']);
 
     // minus
     Route::post('{cart_id:slug}/minus', [CartController::class, 'minus']);
+});
+
+Route::prefix('order')->middleware(['auth', 'user'])->group(function () {
+    // order now
+    Route::post('order', [OrderController::class, 'order'])->name('order');
+
+    // Order
+    Route::get('my-order', [OrderController::class, 'my_order'])->name('my-order');
 });
 
 // category
