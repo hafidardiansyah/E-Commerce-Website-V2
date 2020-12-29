@@ -21,7 +21,8 @@ class CreateOrdersTable extends Migration
             $table->text('description');
             $table->string('payment_method', 10);
             $table->string('payment_status', 10);
-            $table->string('delivery_status', 50);
+            $table->integer('delivery_status');
+            $table->text('delivery_description');
             $table->timestamps();
         });
     }

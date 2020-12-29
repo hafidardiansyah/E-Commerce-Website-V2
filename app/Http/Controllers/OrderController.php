@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Delivery;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{DB, Auth};
@@ -22,13 +23,15 @@ class OrderController extends Controller
         foreach ($carts as $cart) {
             $order = new Order();
 
+
             $order->product_id = $cart->product_id;
             $order->user_id = $cart->user_id;
             $order->order = $cart->order;
             $order->description = $request->description;
             $order->payment_method = $request->payment_method;
             $order->payment_status = 'unpaid';
-            $order->delivery_status = 'packaging';
+            $order->delivery_status = Delivery::where(['active' => 1])->pluck('id')[0];
+            $order->delivery_description = '';
             $order->created_at = now();
             $order->updated_at = now();
             $order->save();
