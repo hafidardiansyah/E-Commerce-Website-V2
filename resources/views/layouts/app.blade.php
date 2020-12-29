@@ -99,6 +99,8 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     @if (Auth::user()->role == 0)
                                         <a class="dropdown-item" href="{{ route('create') }}">New Product</a>
+                                        <a class="dropdown-item" href="{{ route('payment') }}">Payment</a>
+                                        <a class="dropdown-item" href="{{ route('purchase') }}">Purchase</a>
                                     @endif
                                     @if (Auth::user()->role == 1)
                                         <a class="dropdown-item" href="{{ route('my-order') }}">My Order</a>

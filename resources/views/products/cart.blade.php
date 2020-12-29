@@ -87,13 +87,13 @@
                         </td>
                     </tr>
                 @empty
-                    <?php echo "
-                    <script>
-                        alert('Empty cart!');
-                        document.location.href = 'products';
-
-                    </script>
-                    "; ?>
+                    <div class="row">
+                        <div class="container">
+                            <div class="alert alert-info">
+                                Ther's no product.
+                            </div>
+                        </div>
+                    </div>
                 @endforelse
                 <tr>
                     <td colspan="5" class="text-center">

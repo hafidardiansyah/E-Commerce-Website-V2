@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ProductController, CartController, CategoryController, OrderController};
+use App\Http\Controllers\{ProductController, CartController, CategoryController, PurchaseController, OrderController, PaymentController};
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,16 @@ Route::prefix('product')->middleware(['auth', 'admin'])->group(function () {
     // delete product
     Route::delete('{product:slug}/delete', [ProductController::class, 'delete']);
 });
+
+// for admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    // order
+    Route::get('purchase', [PurchaseController::class, 'purchase'])->name('purchase');
+
+    // payment
+    Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
+});
+
 
 // list cart
 Route::get('cart', [CartController::class, 'cart'])->middleware(['auth', 'user'])->name('cart');

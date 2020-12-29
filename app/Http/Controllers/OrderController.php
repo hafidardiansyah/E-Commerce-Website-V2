@@ -23,14 +23,13 @@ class OrderController extends Controller
         foreach ($carts as $cart) {
             $order = new Order();
 
-
             $order->product_id = $cart->product_id;
             $order->user_id = $cart->user_id;
             $order->order = $cart->order;
             $order->description = $request->description;
             $order->payment_method = $request->payment_method;
             $order->payment_status = 'unpaid';
-            $order->delivery_status = Delivery::where(['active' => 1])->pluck('id')[0];
+            $order->delivery_status = 0;
             $order->delivery_description = '';
             $order->created_at = now();
             $order->updated_at = now();
@@ -51,8 +50,19 @@ class OrderController extends Controller
         $userId = Auth::user()->id;
         $currentPage = $_GET['page'] ?? 1;
         $i = 1 + $perPage * ($currentPage - 1);
-        $orders = DB::table('orders')->join('products', 'orders.product_id', '=', 'products.id')->where('orders.user_id', $userId)->simplePaginate($perPage);
 
-        return view('products.my-order', compact('orders', 'total', 'i'));
+        $orders = DB::table('orders')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->join('payments', 'orders.payment_method', '=', 'payments.id')
+            ->select('orders.id as order_id', 'orders.*', 'products.*', 'payments.*')
+            ->where('orders.user_id', $userId)->simplePaginate($perPage);
+
+        $delivery = DB::table('orders')
+            ->join('delivery', 'orders.delivery_status', '=', 'delivery.id')
+            ->where('orders.user_id', $userId)
+            ->select('name', 'delivery_description')
+            ->get();
+
+        return view('products.my-order', compact('orders', 'total', 'i', 'delivery'));
     }
 }
