@@ -27,7 +27,8 @@
                         @endphp
                         <tr>
                             <th scope="row">{{ $i++ }}</th>
-                            <td>{{ $order->product_name }}</td>
+                            <td><a href="/detail/{{ $order->slug }}"
+                                    class="text-decoration-none text-dark">{{ $order->product_name }} </a></td>
                             <td>Rp {{ number_format($order->price * $order->order, 2, ',', '.') }}</td>
                             <td>{{ $order->name }}</td>
                             <td>{{ 'SHOP' . $order->order_id }}</td>
@@ -39,7 +40,7 @@
                                 @endif
                             </td>
                             <td>
-                                {{ $order->delivery_description != '' ? $order->delivery_description : 'Empty' }}
+                                <a href="/order/{{ $order->order_id }}/detail" class="btn btn-sm btn-info text-white">Detail</a>
                             </td>
                         </tr>
                     @empty

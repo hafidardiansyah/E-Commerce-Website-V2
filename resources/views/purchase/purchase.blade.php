@@ -15,9 +15,9 @@
                         {{-- <th scope="col">Image</th> --}}
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Address</th>
                         <th scope="col">Delivery</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,13 +33,6 @@
                             </td> --}}
                             <td>{{ $order->name }}</td>
                             <td>Rp {{ number_format($order->price * $order->order, 2, ',', '.') }}</td>
-                            <td>
-                                @if ($order->payment_status != 0)
-                                    {{ 'Already paid' }}
-                                @else
-                                    {{ 'Unpaid' }}
-                                @endif
-                            </td>
                             <td>{{ $order->address }}</td>
                             <td>
                                 @forelse ($delivery as $d)
@@ -48,6 +41,7 @@
                                     Empty
                                 @endforelse
                             </td>
+                            <td><a href="/{{ $order->id }}/edit" class="btn btn-sm btn-warning">Edit</a></td>
                         </tr>
                     @empty
                         <div class="row">

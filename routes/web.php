@@ -42,8 +42,12 @@ Route::prefix('product')->middleware(['auth', 'admin'])->group(function () {
 
 // for admin
 Route::middleware(['auth', 'admin'])->group(function () {
-    // order
+    // purchase
     Route::get('purchase', [PurchaseController::class, 'purchase'])->name('purchase');
+
+    // edit
+    Route::get('{purchase:slug}/edit', [PurchaseController::class, 'edit']);
+    Route::patch('{purchase:slug}/update', [PurchaseController::class, 'update']);
 
     // payment
     Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
@@ -78,6 +82,9 @@ Route::prefix('order')->middleware(['auth', 'user'])->group(function () {
 
     // Order
     Route::get('my-order', [OrderController::class, 'my_order'])->name('my-order');
+
+    // Detail
+    Route::get('{order:slug}/detail', [OrderController::class, 'detail']);
 });
 
 // category

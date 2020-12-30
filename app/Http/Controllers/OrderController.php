@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\{DB, Auth};
 
 class OrderController extends Controller
 {
-    public function checkout()
+    public function checkout(Order $order)
     {
         $total = 0;
-        $order = new Order;
         $userId = Auth::user()->id;
         $payments = DB::table('payments')->where('active', 1)->get();
         $user = DB::table('users')->where('id', $userId)->pluck('address')[0];
@@ -77,5 +76,11 @@ class OrderController extends Controller
             ->where('orders.user_id', $userId)->simplePaginate($perPage);
 
         return view('order.my-order', compact('orders', 'total', 'i'));
+    }
+
+    public function detail($order)
+    {
+        $results = Order::where('orders.id', $order)->join('delivery', 'orders.delivery_status', '=', 'delivery.id')->get();
+        return view('order.detail', compact('results'));
     }
 }
