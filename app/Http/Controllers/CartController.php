@@ -24,7 +24,7 @@ class CartController extends Controller
             ->select('products.*', 'cart.id as cart_id', 'cart.order')
             ->simplePaginate($perPage);
 
-        return view('products.cart', compact('products', 'total', 'i'));
+        return view('cart.cart', compact('products', 'total', 'i'));
     }
 
     public function add(Request $request)
@@ -95,24 +95,5 @@ class CartController extends Controller
         session()->flash('success', 'The product was deleted.');
 
         return redirect('/cart');
-    }
-
-    public function checkout()
-    {
-        $total = 0;
-        $userId = Auth::user()->id;
-        $payments = DB::table('payments')->where('active', 1)->get();
-        $user = DB::table('users')->where('id', $userId)->pluck('address')[0];
-
-        $products = DB::table('cart')
-            ->join('products', 'cart.product_id', '=', 'products.id')
-            ->where('cart.user_id', $userId)
-            ->select('products.*', 'cart.id as cart_id', 'cart.order')->get();
-
-        foreach ($products as $product) {
-            $total += $product->price * $product->order;
-        }
-
-        return view('products.checkout', compact('total', 'products', 'user', 'payments'));
     }
 }

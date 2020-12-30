@@ -12,13 +12,12 @@
                 <thead>
                     <tr>
                         <th scope="col">No</th>
-                        {{-- <th scope="col">Image</th> --}}
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Delivery</th>
                         <th scope="col">Payment Method</th>
                         <th scope="col">Payment Code</th>
                         <th scope="col">Payment Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,18 +27,20 @@
                         @endphp
                         <tr>
                             <th scope="row">{{ $i++ }}</th>
-                            <td>{{ $order->name }}</td>
+                            <td>{{ $order->product_name }}</td>
                             <td>Rp {{ number_format($order->price * $order->order, 2, ',', '.') }}</td>
-                            <td>
-                                @forelse ($delivery as $d)
-                                    {{ $d->name . ' ' . $d->delivery_description }}
-                                @empty
-                                    Empty
-                                @endforelse
-                            </td>
                             <td>{{ $order->name }}</td>
                             <td>{{ 'SHOP' . $order->order_id }}</td>
-                            <td>{{ $order->payment_status }}</td>
+                            <td>
+                                @if ($order->payment_status != 0)
+                                    <p class="text-success">Already paid</p>
+                                @else
+                                    <p class="text-danger">Unpaid</p>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-info text-white">Detail</a>
+                            </td>
                         </tr>
                     @empty
                         <div class="row">

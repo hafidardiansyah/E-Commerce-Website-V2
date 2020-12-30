@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id');
             $table->integer('order');
             $table->text('description');
-            $table->string('payment_method', 10);
+            $table->integer('payment_method');
             $table->boolean('payment_status');
             $table->integer('delivery_status');
             $table->text('delivery_description');

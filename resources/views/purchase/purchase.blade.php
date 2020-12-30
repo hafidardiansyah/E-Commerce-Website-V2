@@ -33,7 +33,13 @@
                             </td> --}}
                             <td>{{ $order->name }}</td>
                             <td>Rp {{ number_format($order->price * $order->order, 2, ',', '.') }}</td>
-                            <td>{{ $order->payment_status }}</td>
+                            <td>
+                                @if ($order->payment_status != 0)
+                                    {{ 'Already paid' }}
+                                @else
+                                    {{ 'Unpaid' }}
+                                @endif
+                            </td>
                             <td>{{ $order->address }}</td>
                             <td>
                                 @forelse ($delivery as $d)

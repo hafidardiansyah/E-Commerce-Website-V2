@@ -81,7 +81,7 @@
                         <label for="description">Description</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" id="description"
                             name="description" placeholder="Please enter your description for admin!"
-                            autocomplete="off"></textarea>
+                            autocomplete="off">{{ old('description') ?? $order->description }}</textarea>
                         @error('description')
                             <div class="invalid-feedback">
                                 {{ $message }}

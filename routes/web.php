@@ -47,6 +47,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // payment
     Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
+    Route::patch('submit', [PaymentController::class, 'submit'])->name('submit');
 });
 
 
@@ -61,9 +62,6 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
     // delete product in cart
     Route::delete('{cart_id:slug}/delete', [CartController::class, 'delete']);
 
-    // checkout
-    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
-
     // plus
     Route::post('{cart_id:slug}/plus', [CartController::class, 'plus']);
 
@@ -72,6 +70,9 @@ Route::prefix('cart')->middleware(['auth', 'user'])->group(function () {
 });
 
 Route::prefix('order')->middleware(['auth', 'user'])->group(function () {
+    // checkout
+    Route::get('checkout', [OrderController::class, 'checkout'])->name('checkout');
+
     // order now
     Route::post('order', [OrderController::class, 'order'])->name('order');
 

@@ -17,7 +17,7 @@ class PurchaseController extends Controller
         $orders = DB::table('orders')
             ->join('products', 'orders.product_id', '=', 'products.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where(['delivery_status' => !0])
+            ->where(['payment_status' => !0])
             ->simplePaginate($perPage);
 
         $delivery = DB::table('orders')

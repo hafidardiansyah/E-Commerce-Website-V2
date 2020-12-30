@@ -2,13 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Delivery;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{DB, Auth};
 
 class OrderController extends Controller
 {
+    public function checkout()
+    {
+        $total = 0;
+        $order = new Order;
+        $userId = Auth::user()->id;
+        $payments = DB::table('payments')->where('active', 1)->get();
+        $user = DB::table('users')->where('id', $userId)->pluck('address')[0];
+
+        $products = DB::table('cart')
+            ->join('products', 'cart.product_id', '=', 'products.id')
+            ->where('cart.user_id', $userId)
+            ->select('products.*', 'cart.id as cart_id', 'cart.order')->get();
+
+        foreach ($products as $product) {
+            $total += $product->price * $product->order;
+        }
+
+        return view('order.checkout', compact('total', 'products', 'user', 'payments', 'order'));
+    }
+
     public function order(Request $request)
     {
         $request->validate([
@@ -28,7 +47,7 @@ class OrderController extends Controller
             $order->order = $cart->order;
             $order->description = $request->description;
             $order->payment_method = $request->payment_method;
-            $order->payment_status = 'unpaid';
+            $order->payment_status = 0;
             $order->delivery_status = 0;
             $order->delivery_description = '';
             $order->created_at = now();
@@ -54,15 +73,9 @@ class OrderController extends Controller
         $orders = DB::table('orders')
             ->join('products', 'orders.product_id', '=', 'products.id')
             ->join('payments', 'orders.payment_method', '=', 'payments.id')
-            ->select('orders.id as order_id', 'orders.*', 'products.*', 'payments.*')
+            ->select('orders.id as order_id', 'orders.*', 'products.*', 'payments.*', 'products.name as product_name')
             ->where('orders.user_id', $userId)->simplePaginate($perPage);
 
-        $delivery = DB::table('orders')
-            ->join('delivery', 'orders.delivery_status', '=', 'delivery.id')
-            ->where('orders.user_id', $userId)
-            ->select('name', 'delivery_description')
-            ->get();
-
-        return view('products.my-order', compact('orders', 'total', 'i', 'delivery'));
+        return view('order.my-order', compact('orders', 'total', 'i'));
     }
 }
