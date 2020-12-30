@@ -39,7 +39,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-info text-white">Detail</a>
+                                {{ $order->delivery_description != '' ? $order->delivery_description : 'Empty' }}
                             </td>
                         </tr>
                     @empty
