@@ -28,6 +28,8 @@
         <td><img src="images/login.png"></td>
         <td><img src="images/new.png"></td>
         <td><img src="images/edit.png"></td>
+    </tr>
+    <tr>
         <td><img src="images/cart.png"></td>
         <td><img src="images/order.png"></td>
         <td><img src="images/purchase.png"></td>
