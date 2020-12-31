@@ -17,8 +17,8 @@
 -   [x] Category
 -   [x] Purchase
 -   [x] Cart
--   [x] Purchase
 -   [x] Order
+-   [x] Payment
 
 ## Screenshot Project
 
