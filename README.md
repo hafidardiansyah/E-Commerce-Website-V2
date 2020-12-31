@@ -23,15 +23,15 @@
 ## Screenshot Project
 
 <table>
-    <td>
-        <tr><img src="images/home.png"></tr>
-        <tr><img src="images/login.png"></tr>
-        <tr><img src="images/new.png"></tr>
-        <tr><img src="images/edit.png"></tr>
-        <tr><img src="images/cart.png"></tr>
-        <tr><img src="images/order.png"></tr>
-        <tr><img src="images/purchase.png"></tr>
-    </td>
+    <tr>
+        <td><img src="images/home.png"></td>
+        <td><img src="images/login.png"></td>
+        <td><img src="images/new.png"></td>
+        <td><img src="images/edit.png"></td>
+        <td><img src="images/cart.png"></td>
+        <td><img src="images/order.png"></td>
+        <td><img src="images/purchase.png"></td>
+    </tr>
 </table>
 
 ## About Laravel
