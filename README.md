@@ -27,7 +27,6 @@
         <td><img src="images/home.png"></td>
         <td><img src="images/login.png"></td>
         <td><img src="images/new.png"></td>
-        <td><img src="images/edit.png"></td>
     </tr>
     <tr>
         <td><img src="images/cart.png"></td>
