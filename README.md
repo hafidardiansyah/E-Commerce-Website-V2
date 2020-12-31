@@ -22,7 +22,17 @@
 
 ## Screenshot Project
 
-|<img src="images/home.png">|<img src="images/login.png">|<img src="images/new.png">|<img src="images/edit.png">|<img src="images/cart.png">|<img src="images/order.png">|<img src="images/purchase.png">|
+<table>
+    <td>
+        <tr><img src="images/home.png"></tr>
+        <tr><img src="images/login.png"></tr>
+        <tr><img src="images/new.png"></tr>
+        <tr><img src="images/edit.png"></tr>
+        <tr><img src="images/cart.png"></tr>
+        <tr><img src="images/order.png"></tr>
+        <tr><img src="images/purchase.png"></tr>
+    </td>
+</table>
 
 ## About Laravel
 
