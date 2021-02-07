@@ -3,7 +3,8 @@
 @section('content')
 
     <div class="container">
-
+        <h3>Detail Product</h3> 
+        <p style="display: inline">Category - </p>
         <a href="/products/{{ $product->category->slug }}" class="text-decoration-none text-dark">
             {{ $product->category->name }}
         </a>

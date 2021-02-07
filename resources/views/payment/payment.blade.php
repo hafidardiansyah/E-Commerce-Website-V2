@@ -4,6 +4,8 @@
 
     <div class="container">
 
+        <h3 class="text-dark">Payment</h3>
+        <hr>
         <form action="{{ route('submit') }}" method="POST">
             @csrf
             @method('patch')

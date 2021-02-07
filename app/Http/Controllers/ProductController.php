@@ -37,9 +37,11 @@ class ProductController extends Controller
     public function search()
     {
         $keyword = request('keyword');
-        $products = Product::where('name', 'like', "%$keyword%")->latest()->simplePaginate(32);
 
-        return view('products.products', compact('products'));
+        return view('products.products', [
+            'products' => Product::where('name', 'like', "%$keyword%")->latest()->simplePaginate(32),
+            'categories' => Category::latest()->simplePaginate(10)
+        ]);
     }
 
     public function create()

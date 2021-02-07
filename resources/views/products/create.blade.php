@@ -3,7 +3,8 @@
 @section('content')
 
     <div class="container">
-
+        <h3 class="text-dark">Create Product</h3>
+        <hr>
         <div class="row">
 
             <div class="col-md-6">

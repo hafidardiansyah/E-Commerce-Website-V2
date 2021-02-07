@@ -54,8 +54,7 @@
                     <ul class="navbar-nav">
                         <form action="{{ route('search') }}" method="GET" class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="text" placeholder="Enter keyword..."
-                                aria-label="Search" name="keyword" autocomplete="off"
-                                value="{{ $_GET['keyword'] ?? '' }}">
+                                aria-label="Search" name="keyword" autocomplete="on">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                                 Search
                             </button>

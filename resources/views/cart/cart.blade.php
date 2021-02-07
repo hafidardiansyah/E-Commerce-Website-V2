@@ -1,9 +1,7 @@
 @extends('layouts.app', ['title' => 'Create product'])
 
 @section('content')
-
     <div class="container">
-
         <h3 class="text-dark">My Cart</h3>
         <hr>
         <table class="table table-hover table-bordered">
