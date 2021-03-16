@@ -27,11 +27,6 @@ Website ini saya buat untuk melatih saya menggunakan Laravel dan Bootstrap.
 -   Pagination
 -   Responsive website
 
-### :link: Social Media
-
--   Instagram : <a href="http://instagram.com/dev.hafid"> @dev.hafid</a>
--   Dribbble : <a href="https://dribbble.com/hafidardiansyah"> hafidardiansyah</a>
-
 ### 📝 Lisensi
 
 -   Copyright © 2020 Hafid Ardiansyah.
