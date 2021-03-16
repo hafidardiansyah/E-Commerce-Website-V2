@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ProductController, CartController, CategoryController, PurchaseController, OrderController, PaymentController};
+use App\Http\Controllers\{ProductController, CartController, CategoryController, PurchaseController, OrderController, PaymentController, RandomController};
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,12 @@ Route::get('detail/{product:slug}', [ProductController::class, 'detail']);
 Route::get('products/search', [ProductController::class, 'search'])->name('search');
 // list product
 Route::get('products', [ProductController::class, 'products'])->name('products');
+// random
 
+Route::get('about', [RandomController::class, 'about'])->name('about');
+Route::get('gallery', [RandomController::class, 'gallery'])->name('gallery');
+
+// Auth
 Auth::routes();
 
 // for admin

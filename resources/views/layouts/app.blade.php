@@ -45,7 +45,17 @@
                             <a href="{{ route('products') }}" class="nav-link{{ request()->segment(1) == 'products' ? ' active' : '' }}">
                                 List Product
                             </a>
-                        </li>
+                        </li>    
+                        <li class="nav-item">
+                            <a href="{{ route('gallery') }}" class="nav-link{{ request()->segment(1) == 'gallery' ? ' active' : '' }}">
+                                Gallery
+                            </a>
+                        </li>     
+                        <li class="nav-item">
+                            <a href="{{ route('about') }}" class="nav-link{{ request()->segment(1) == 'about' ? ' active' : '' }}">
+                                About
+                            </a>
+                        </li>              
                     </ul>
 
                     <ul class="navbar-nav">
@@ -135,6 +145,10 @@
             }
 
         }
+        $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
     </script>
 </body>
 

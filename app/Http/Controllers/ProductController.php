@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return view('products.home', [
+        return view('home', [
             'carouselProducts' => Product::limit(5)->get(),
             'products' => Product::latest()->simplePaginate(32),
             'categories' => Category::latest()->simplePaginate(10)
